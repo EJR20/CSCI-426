@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FitQuest - Create Workout Plan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root { --red:#e53935; --dark-red:#c62828; --border:#dddddd; --text:#222; }
+
+*{box-sizing:border-box;}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#ffffff;
+    color:var(--text);
+}
+
+.page-wrapper{
+    min-height:100vh;
+    padding:24px 16px 40px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* @FitQuest pill */
+.brand-pill-wrapper{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+}
+.brand-pill{
+    position:relative;
+}
+.brand-pill-shadow{
+    position:absolute;
+    top:6px;
+    left:8px;
+    background:var(--red);
+    border-radius:999px;
+    padding:6px 32px;
+}
+.brand-pill-foreground{
+    position:relative;
+    background:#ffffff;
+    border-radius:999px;
+    border:2px solid var(--border);
+    padding:8px 38px;
+    z-index:1;
+}
+.brand-pill-text{
+    font-weight:bold;
+    letter-spacing:0.5px;
+}
+
+/* Main panel */
+.panel{
+    width:100%;
+    max-width:720px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 18px 22px;
+}
+
+/* Left red accent bar */
+.panel-inner{
+    display:flex;
+}
+.panel-accent{
+    width:8px;
+    background:var(--red);
+    border-radius:6px;
+    margin-right:14px;
+}
+.panel-content{
+    flex:1;
+}
+
+/* Header */
+.panel-header{
+    margin-bottom:16px;
+    border-bottom:1px solid #eeeeee;
+    padding-bottom:6px;
+}
+.panel-header h1{
+    margin:0 0 4px;
+    font-size:1.4rem;
+}
+.panel-header p{
+    margin:0;
+    font-size:0.9rem;
+    color:#555555;
+}
+
+/* Error box */
+.error-box{
+    display:none;
+    border:1px solid var(--red);
+    background:#ffebee;
+    color:#b71c1c;
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:0.85rem;
+    margin-bottom:12px;
+}
+
+/* Form styling */
+.form-section-title{
+    font-weight:bold;
+    font-size:0.95rem;
+    margin:10px 0 6px;
+}
+
+.form-row{
+    margin-bottom:10px;
+}
+
+label{
+    display:block;
+    font-size:0.9rem;
+    margin-bottom:4px;
+}
+
+.required{
+    color:var(--red);
+}
+
+input, select{
+    width:100%;
+    padding:7px 9px;
+    border-radius:5px;
+    border:1px solid #cccccc;
+    font-size:0.9rem;
+}
+
+input:focus, select:focus{
+    outline:none;
+    border-color:var(--red);
+}
+
+.helper{
+    font-size:0.78rem;
+    color:#777;
+    margin-top:2px;
+}
+
+.field-error input,
+.field-error select{
+    border-color:var(--red);
+}
+
+.error-text{
+    display:none;
+    font-size:0.78rem;
+    color:var(--red);
+    margin-top:2px;
+}
+
+/* Two columns on bigger screens */
+.two-column{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+/* Exercise rows */
+.exercise-row{
+    border:1px solid #eeeeee;
+    border-radius:8px;
+    padding:10px 10px 8px;
+    margin-bottom:8px;
+    background:#fafafa;
+}
+
+.exercise-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:8px;
+}
+
+.exercise-row label{
+    font-size:0.8rem;
+}
+
+/* Add/remove buttons */
+.add-exercise-wrap{
+    margin-top:4px;
+}
+
+.add-exercise-btn{
+    border-radius:999px;
+    border:1px solid var(--red);
+    background:#ffffff;
+    color:var(--red);
+    font-size:0.82rem;
+    padding:5px 12px;
+    cursor:pointer;
+}
+
+.add-exercise-btn:hover{
+    background:#ffebee;
+}
+
+.remove-link{
+    margin-top:4px;
+    text-align:right;
+}
+
+.remove-btn{
+    background:none;
+    border:none;
+    color:#777;
+    font-size:0.75rem;
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+/* Buttons */
+.buttons{
+    margin-top:14px;
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    flex-wrap:wrap;
+}
+.primary-btn{
+    background:var(--red);
+    border:none;
+    color:#fff;
+    padding:8px 20px;
+    border-radius:999px;
+    font-size:0.9rem;
+    cursor:pointer;
+}
+.primary-btn:hover{
+    background:var(--dark-red);
+}
+.secondary-btn{
+    background:transparent;
+    border:1px solid #bbbbbb;
+    color:#555;
+    padding:8px 18px;
+    border-radius:999px;
+    font-size:0.88rem;
+    cursor:pointer;
+}
+.secondary-btn:hover{
+    background:#f5f5f5;
+}
+
+/* Responsive */
+@media(max-width:700px){
+    .panel{
+        padding:16px 14px 18px;
+    }
+    .panel-inner{
+        flex-direction:row;
+    }
+    .exercise-grid{
+        grid-template-columns:1fr;
+    }
+    .two-column{
+        grid-template-columns:1fr;
+    }
+    .buttons{
+        flex-direction:column-reverse;
+        align-items:stretch;
+    }
+    .primary-btn,
+    .secondary-btn{
+        width:100%;
+        text-align:center;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <div class="brand-pill-wrapper">
+        <div class="brand-pill">
+            <div class="brand-pill-shadow"></div>
+            <div class="brand-pill-foreground">
+                <span class="brand-pill-text">@ FitQuest</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-inner">
+            <div class="panel-accent"></div>
+            <div class="panel-content">
+                <div class="panel-header">
+                    <h1>Create Workout Plan</h1>
+                    <p>Fill out the form to create and save a workout plan.</p>
+                </div>
+
+                <div id="errorBox" class="error-box">
+                    Please fix the fields marked in red.
+                </div>
+
+                <form id="workoutForm" novalidate>
+                    <div class="form-section-title">Workout Details</div>
+
+                    <div class="form-row" id="workoutNameRow">
+                        <label>Workout Name <span class="required">*</span></label>
+                        <input type="text" id="workoutName" placeholder="e.g. Upper Body Strength">
+                        <div class="helper">At least 3 characters.</div>
+                        <div class="error-text" id="workoutNameError"></div>
+                    </div>
+
+                    <div class="two-column">
+                        <div class="form-row" id="difficultyRow">
+                            <label>Difficulty Level <span class="required">*</span></label>
+                            <select id="difficulty">
+                                <option value="">Select difficulty</option>
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                            <div class="error-text" id="difficultyError"></div>
+                        </div>
+
+                        <div class="form-row" id="targetRow">
+                            <label>Target Muscle Group <span class="required">*</span></label>
+                            <select id="targetMuscle">
+                                <option value="">Select target</option>
+                                <option>Full Body</option>
+                                <option>Upper Body</option>
+                                <option>Lower Body</option>
+                                <option>Core</option>
+                            </select>
+                            <div class="error-text" id="targetError"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-title" style="margin-top:14px;">Exercises</div>
+                    <div class="helper" style="margin-bottom:6px;">Exercise 1 is required. You can add more exercises if you want.</div>
+
+                    <div id="exerciseContainer">
+                        <!-- exercise rows inserted by JS -->
+                    </div>
+
+                    <div class="add-exercise-wrap">
+                        <button type="button" class="add-exercise-btn" id="addExerciseBtn">+ Add Exercise</button>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="button" class="secondary-btn" id="clearBtn">Clear Form</button>
+                        <button type="submit" class="primary-btn">Save Plan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const form = document.getElementById("workoutForm");
+const errorBox = document.getElementById("errorBox");
+const exerciseContainer = document.getElementById("exerciseContainer");
+const addExerciseBtn = document.getElementById("addExerciseBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+let exerciseCount = 0;
+
+function clearErr(rowId, errorId){
+    const row = document.getElementById(rowId);
+    const err = document.getElementById(errorId);
+    if(row){ row.classList.remove("field-error"); }
+    if(err){
+        err.style.display = "none";
+        err.textContent = "";
+    }
+}
+
+function setErr(rowId, errorId, message){
+    const row = document.getElementById(rowId);
+    const err = document.getElementById(errorId);
+    if(row){ row.classList.add("field-error"); }
+    if(err){
+        err.style.display = "block";
+        err.textContent = message;
+    }
+}
+
+function clearAllErrors(){
+    errorBox.style.display = "none";
+    clearErr("workoutNameRow","workoutNameError");
+    clearErr("difficultyRow","difficultyError");
+    clearErr("targetRow","targetError");
+    const rows = exerciseContainer.querySelectorAll(".exercise-row");
+    rows.forEach(row => {
+        const id = row.getAttribute("data-id");
+        clearErr("exRow_"+id, "exNameError_"+id);
+        clearErr("exRow_"+id, "exSetsError_"+id);
+        clearErr("exRow_"+id, "exRepsError_"+id);
+        clearErr("exRow_"+id, "exRestError_"+id);
+    });
+}
+
+function createExerciseRow(isRequired){
+    exerciseCount++;
+    const id = exerciseCount;
+
+    const row = document.createElement("div");
+    row.className = "exercise-row";
+    row.id = "exRow_"+id;
+    row.setAttribute("data-id", id);
+
+    const requiredText = isRequired ? '<span class="required">*</span>' : "";
+    const labelText = isRequired ? "Exercise 1" : "Exercise "+id;
+
+    row.innerHTML = `
+        <div class="exercise-grid">
+            <div class="form-row">
+                <label>${labelText} ${requiredText}</label>
+                <input type="text" id="exName_${id}">
+                <div class="error-text" id="exNameError_${id}"></div>
+            </div>
+            <div class="form-row">
+                <label>Sets ${requiredText}</label>
+                <input type="number" id="exSets_${id}" min="1" max="20">
+                <div class="error-text" id="exSetsError_${id}"></div>
+            </div>
+            <div class="form-row">
+                <label>Reps ${requiredText}</label>
+                <input type="number" id="exReps_${id}" min="1" max="50">
+                <div class="error-text" id="exRepsError_${id}"></div>
+            </div>
+            <div class="form-row">
+                <label>Rest (seconds) ${requiredText}</label>
+                <input type="number" id="exRest_${id}" min="10" max="600">
+                <div class="error-text" id="exRestError_${id}"></div>
+            </div>
+        </div>
+    `;
+
+    if(!isRequired){
+        const removeDiv = document.createElement("div");
+        removeDiv.className = "remove-link";
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "remove-btn";
+        btn.textContent = "Remove exercise";
+        btn.addEventListener("click", () => {
+            exerciseContainer.removeChild(row);
+        });
+        removeDiv.appendChild(btn);
+        row.appendChild(removeDiv);
+    }
+
+    exerciseContainer.appendChild(row);
+}
+
+function setupInitialExercises(){
+    exerciseContainer.innerHTML = "";
+    exerciseCount = 0;
+    createExerciseRow(true);   // Exercise 1 (required)
+}
+
+form.addEventListener("submit", function(e){
+    e.preventDefault();
+    clearAllErrors();
+    let bad = false;
+
+    const wn = document.getElementById("workoutName").value.trim();
+    const diff = document.getElementById("difficulty").value;
+    const target = document.getElementById("targetMuscle").value;
+
+    if(wn === "" || wn.length < 3){
+        setErr("workoutNameRow","workoutNameError","Workout name is required (min 3 characters).");
+        bad = true;
+    }
+    if(diff === ""){
+        setErr("difficultyRow","difficultyError","Select a difficulty level.");
+        bad = true;
+    }
+    if(target === ""){
+        setErr("targetRow","targetError","Select a target muscle group.");
+        bad = true;
+    }
+
+    const rows = exerciseContainer.querySelectorAll(".exercise-row");
+    if(rows.length === 0){
+        bad = true;
+    }
+
+    rows.forEach(row => {
+        const id = row.getAttribute("data-id");
+        const nameInput = document.getElementById("exName_"+id);
+        const setsInput = document.getElementById("exSets_"+id);
+        const repsInput = document.getElementById("exReps_"+id);
+        const restInput = document.getElementById("exRest_"+id);
+
+        const isFirst = id === "1";
+        const nameVal = nameInput.value.trim();
+        const setsVal = setsInput.value;
+        const repsVal = repsInput.value;
+        const restVal = restInput.value;
+
+        if(isFirst || nameVal || setsVal || repsVal || restVal){
+            if(nameVal === ""){
+                setErr("exRow_"+id,"exNameError_"+id,"Exercise name is required.");
+                bad = true;
+            }
+            const s = parseInt(setsVal,10);
+            if(setsVal === "" || isNaN(s) || s < 1 || s > 20){
+                setErr("exRow_"+id,"exSetsError_"+id,"Sets must be 1–20.");
+                bad = true;
+            }
+            const r = parseInt(repsVal,10);
+            if(repsVal === "" || isNaN(r) || r < 1 || r > 50){
+                setErr("exRow_"+id,"exRepsError_"+id,"Reps must be 1–50.");
+                bad = true;
+            }
+            const rt = parseInt(restVal,10);
+            if(restVal === "" || isNaN(rt) || rt < 10 || rt > 600){
+                setErr("exRow_"+id,"exRestError_"+id,"Rest must be 10–600 seconds.");
+                bad = true;
+            }
+        }
+    });
+
+    if(bad){
+        errorBox.style.display = "block";
+    } else {
+        alert("Workout plan saved (prototype).");
+        form.reset();
+        setupInitialExercises();
+        clearAllErrors();
+    }
+});
+
+addExerciseBtn.addEventListener("click", function(){
+    createExerciseRow(false);
+});
+
+clearBtn.addEventListener("click", function(){
+    form.reset();
+    setupInitialExercises();
+    clearAllErrors();
+});
+
+setupInitialExercises();
+</script>
+
+</body>
+</html>
