@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<!--
+		  Author: Juste-Marie Fagla
+		  Date:   2025-11-22
+		  
+		  Filename: fitQuest_login
+	-->
+
+		<meta charset="UTF-8">
+		<title> Login</title>
+
+		<style>
+			body {
+				background: #f0f0f0;
+				font-family: Arial;
+				color: #000;
+				transition: background 0.3s, color 0.3s;
+			}
+
+			/* DARK THEME MODE */
+			body.dark {
+				background: #1c1c1c;
+				color: #f5f5f5;
+			}
+			body.dark .visible-body,
+			body.dark .hidden-body {
+				background: #2b2b2b;
+				box-shadow: 0 0 10px rgba(255,255,255,0.1);
+			}
+			body.dark .card-front {
+				background: #333;
+				border: 2px solid #fff;
+				color: #fff;
+			}
+			body.dark .card-back {
+				background: #780020;
+			}
+			body.dark input {
+				background: #444;
+				color: #fff;
+				border: 1px solid #aaa;
+			}
+			body.dark button {
+				background: #DB073D;
+			}
+			body.dark blockquote {
+				color: #ccc;
+			}
+
+			.toggle-btn {
+				position: fixed;
+				top: 15px;
+				left: 15px;
+				cursor: pointer;
+				width: 50px;
+				height: 50px;
+			}
+
+			.container {
+				width: 400px;
+				margin: 80px auto 40px;
+				padding: 20px;
+			}
+
+			.title-card {
+				position: relative;
+				width: 280px;
+				height: 80px;
+			}
+
+			.card-back {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				width: 100%;
+				height: 100%;
+				background: #DB073D;
+				border-radius: 15px;
+			}
+
+			.card-front {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: white;
+				border: 2px solid #000;
+				border-radius: 15px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 28px;
+			}
+
+			.guide_1 {
+				opacity: 55%;
+			}
+
+			.visible-body {
+				padding: 20px;
+				background: white;
+				border-radius: 8px;
+				text-align: center;
+				box-shadow: 0 0 10px rgba(0,0,0,0.1);
+			}
+
+			.fitness-image {
+				width: 100%;
+				height: 240px;
+				background: #e6e6e6;
+				border-radius: 10px;
+				overflow: hidden;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.fitness-image img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			#revealSlider {
+				width: 100%;
+				margin-top: 25px;
+				-webkit-appearance: none;
+				appearance: none;
+				height: 10px;
+				background: #ccc;
+				border-radius: 5px;
+			}
+
+			#revealSlider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 30px;
+				height: 30px;
+				background: #DB073D;
+				border-radius: 50%;
+				cursor: pointer;
+			}
+
+			.hidden-body {
+				margin-top: 20px;
+				padding: 20px;
+				background: white;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0,0,0,0.1);
+				display: none;
+			}
+
+			.forms {
+				display: flex;
+				justify-content: space-between;
+				gap: 15px;
+			}
+
+			.form-box {
+				width: 50%;
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+
+			.form-box input {
+				margin: 8px 0px;
+				padding: 8px;
+				border: 1px solid #aaa;
+				border-radius: 4px;
+			}
+
+			.form-box button {
+				padding: 8px;
+				border: none;
+				border-radius: 4px;
+				background: #DB073D;
+				color: white;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+
+		<img class="toggle-btn" id="toggle_theme" 
+			 src="img/toggle_off.png" 
+			 alt="Toggle Theme">
+
+		<section class="container">
+
+			<div class="visible-body">
+				<h2>FitQuest</h2>
+
+				<div class="title-card">
+					<div class="card-back"></div>
+					<div class="card-front">@ FitQuest</div>
+				</div>
+
+				<br/>
+
+				<div class="fitness-image">
+					<img src="img/track_n_fitness.gif" alt="Fitness GIF">
+				</div>
+
+				<blockquote>Build your body one rep at a time</blockquote>
+				<hr/>
+
+				<p class="guide_1">Slide the bar fully to continue</p>
+
+				<input id="revealSlider" type="range" min="0" max="100" value="0">
+			</div>
+
+			<div id="hiddenSection" class="hidden-body">
+				<h2>Account Access</h2>
+
+				<div class="forms">
+
+					<div class="form-box">
+						<form>
+							<h3>Sign In</h3>
+							<input type="text" placeholder="Email">
+							<input type="password" placeholder="Password">
+							<button>Sign In</button>
+						</form>
+					</div>
+
+					<div class="form-box">
+						<form>
+							<h3>Sign Up</h3>
+							<input type="text" placeholder="Full Name">
+							<input type="email" placeholder="Email">
+							<input type="password" placeholder="Password">
+							<button>Create Account</button>
+						</form>
+					</div>
+
+				</div>
+			</div>
+
+		</section>
+
+		<script>
+			const slider = document.getElementById("revealSlider");
+			const hiddenSection = document.getElementById("hiddenSection");
+			const toggleBtn = document.getElementById("toggle_theme");
+		
+			toggleBtn.addEventListener("click", function(){
+				if (toggleBtn.src.includes("img/toggle_off.png")){
+					toggleBtn.src = "img/toggle_on.png";
+				}
+				else {
+					toggleBtn.src = "img/toggle_off.png";
+				}
+			});
+			
+			toggleBtn.addEventListener("click", () => {
+				document.body.classList.toggle("dark");
+			});
+
+			slider.addEventListener("input", () => {
+				if (slider.value == 100) {
+					hiddenSection.style.display = "block";
+				}
+			});
+
+		</script>
+
+	</body>
+</html>
