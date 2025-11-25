@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FitQuest - Progress Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- // CSS -->
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .logo {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 20px;
+            border: 2px solid #ffb3b3;
+            color: #c10000;
+            font-weight: bold;
+            background-color: #ffffff;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 15px auto 30px auto;
+            padding: 0 10px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            border: 1px solid #dddddd;
+            padding: 15px 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 1.4rem;
+        }
+
+        .small-text {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 10px 0 15px 0;
+            font-size: 0.9rem;
+        }
+
+        .summary-item {
+            min-width: 150px;
+        }
+
+        .summary-label {
+            color: #666;
+        }
+
+        .summary-value {
+            font-weight: bold;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background-color: #ffe3e3;
+            color: #a00000;
+            font-size: 0.8rem;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin: 12px 0 5px 0;
+        }
+
+        .field-row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+
+        .required {
+            color: #c10000;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            padding: 6px;
+            border-radius: 5px;
+            border: 1px solid #cccccc;
+            font-size: 0.9rem;
+        }
+
+        textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: 2px solid #c10000;
+            outline-offset: 1px;
+        }
+
+        .hint {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .buttons {
+            margin-top: 12px;
+            text-align: right;
+        }
+
+        button {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .btn-main {
+            background-color: #c10000;
+            color: white;
+            margin-left: 5px;
+        }
+
+        .btn-secondary {
+            background-color: #eeeeee;
+            color: #333;
+        }
+
+        .error-box {
+            display: none;
+            margin-bottom: 10px;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background-color: #ffe5e5;
+            color: #7a0000;
+            font-size: 0.85rem;
+        }
+
+        .success-box {
+            display: none;
+            margin-bottom: 10px;
+            padding: 6px 10px;
+            border-radius: 5px;
+            background-color: #e6ffea;
+            color: #0b6623;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 0 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">@ FitQuest</div>
+</header>
+
+<main>
+    <section class="card" aria-labelledby="page-title">
+        <h1 id="page-title">Progress Log</h1>
+        <p class="small-text">
+            Simple page to record weight, strength, cardio and notes.
+        </p>
+
+        <!-- summary -->
+        <div class="summary">
+            <div class="summary-item">
+                <div class="summary-label">Focus</div>
+                <div class="summary-value">
+                    <span id="summaryFocus" class="pill">None yet</span>
+                </div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Mood</div>
+                <div id="summaryMood" class="summary-value">-</div>
+            </div>
+            <div class="summary-item">
+                <div class="summary-label">Last Weight</div>
+                <div id="summaryWeight" class="summary-value">-</div>
+            </div>
+        </div>
+
+        <!-- messages -->
+        <div id="errorBox" class="error-box"></div>
+        <div id="successBox" class="success-box"></div>
+
+        <!-- form -->
+        <form id="progressForm" novalidate>
+            <div class="section-title">Session Info</div>
+
+            <div class="field-row">
+                <label for="date">Date <span class="required">*</span></label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="field-row">
+                <label for="mood">How did it feel? <span class="required">*</span></label>
+                <select id="mood" name="mood" required>
+                    <option value="">Select...</option>
+                    <option value="Great">Great</option>
+                    <option value="Okay">Okay</option>
+                    <option value="Tired">Tired</option>
+                    <option value="Rough">Rough</option>
+                </select>
+            </div>
+
+            <div class="field-row">
+                <label for="focus">Main focus <span class="required">*</span></label>
+                <select id="focus" name="focus" required>
+                    <option value="">Choose...</option>
+                    <option value="Weight">Weight</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Mixed">Mixed</option>
+                </select>
+            </div>
+
+            <div class="section-title">Numbers</div>
+
+            <div class="field-row">
+                <label for="weight">Weight (lbs) <span class="required">*</span></label>
+                <input type="number" id="weight" name="weight" min="70" max="600" placeholder="e.g. 160" required>
+            </div>
+
+            <div class="field-row">
+                <label for="volume">Strength volume (lbs) <span class="required">*</span></label>
+                <input type="number" id="volume" name="volume" min="0" max="150000" placeholder="e.g. 12000" required>
+                <p class="hint">Estimate sets × reps × weight.</p>
+            </div>
+
+            <div class="field-row">
+                <label for="cardio">Cardio (minutes) <span class="required">*</span></label>
+                <input type="number" id="cardio" name="cardio" min="0" max="300" placeholder="e.g. 25" required>
+            </div>
+
+            <div class="field-row">
+                <label for="rpe">Session RPE (1-10) <span class="required">*</span></label>
+                <input type="number" id="rpe" name="rpe" min="1" max="10" placeholder="7" required>
+            </div>
+
+            <div class="section-title">Notes</div>
+
+            <div class="field-row">
+                <label for="notes">Progress notes <span class="required">*</span></label>
+                <textarea id="notes" name="notes" placeholder="New PR, felt better, etc." required></textarea>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="btn-secondary" id="clearBtn">Clear</button>
+                <button type="submit" class="btn-main">Save</button>
+            </div>
+        </form>
+    </section>
+</main>
+
+<footer style="text-align:center;font-size:0.8rem;color:#666;padding-bottom:15px;">
+    © 2025 FitQuest - Progress Prototype
+</footer>
+
+<!-- // JavaScript -->
+<script>
+    const form = document.getElementById("progressForm");
+    const errorBox = document.getElementById("errorBox");
+    const successBox = document.getElementById("successBox");
+    const clearBtn = document.getElementById("clearBtn");
+
+    const summaryFocus = document.getElementById("summaryFocus");
+    const summaryMood = document.getElementById("summaryMood");
+    const summaryWeight = document.getElementById("summaryWeight");
+
+    // handle form submit
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        errorBox.style.display = "none";
+        successBox.style.display = "none";
+        errorBox.innerHTML = "";
+
+        const errors = [];
+
+        const date = document.getElementById("date").value;
+        const mood = document.getElementById("mood").value;
+        const focus = document.getElementById("focus").value;
+        const weight = document.getElementById("weight").value.trim();
+        const volume = document.getElementById("volume").value.trim();
+        const cardio = document.getElementById("cardio").value.trim();
+        const rpe = document.getElementById("rpe").value.trim();
+        const notes = document.getElementById("notes").value.trim();
+
+        if (!date) errors.push("Please choose a date.");
+        if (!mood) errors.push("Please select a mood.");
+        if (!focus) errors.push("Please choose a focus.");
+
+        const weightNum = Number(weight);
+        if (!weight || isNaN(weightNum) || weightNum < 70 || weightNum > 600) {
+            errors.push("Weight must be 70-600.");
+        }
+
+        const volNum = Number(volume);
+        if (!volume || isNaN(volNum) || volNum < 0 || volNum > 150000) {
+            errors.push("Volume must be 0-150000.");
+        }
+
+        const cardioNum = Number(cardio);
+        if (!cardio || isNaN(cardioNum) || cardioNum < 0 || cardioNum > 300) {
+            errors.push("Cardio must be 0-300.");
+        }
+
+        const rpeNum = Number(rpe);
+        if (!rpe || isNaN(rpeNum) || rpeNum < 1 || rpeNum > 10) {
+            errors.push("RPE must be 1-10.");
+        }
+
+        if (notes.length < 5) {
+            errors.push("Notes must be longer.");
+        }
+        if (notes.includes("<") || notes.includes(">")) {
+            errors.push("Notes cannot have < or >.");
+        }
+
+        if (errors.length > 0) {
+            errorBox.style.display = "block";
+            errorBox.innerHTML = "Fix these:<br>• " + errors.join("<br>• ");
+        } else {
+            successBox.style.display = "block";
+            successBox.textContent = "Saved (demo only).";
+
+            summaryFocus.textContent = focus;
+            summaryMood.textContent = mood;
+            summaryWeight.textContent = weight + " lbs";
+
+            form.reset();
+        }
+    });
+
+    // handle clear button
+    clearBtn.addEventListener("click", function () {
+        form.reset();
+        errorBox.style.display = "none";
+        successBox.style.display = "none";
+    });
+</script>
+
+</body>
+</html>
