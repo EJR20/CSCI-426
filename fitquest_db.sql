@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `fitquest_db`
 --
-
+  CREATE DATABASE IF NOT EXISTS 'Fitquest_DB';
+  USE 'Fitquest_DB' ;
 -- --------------------------------------------------------
 
 --
