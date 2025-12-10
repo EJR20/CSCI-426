@@ -1,202 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<!--
-		  Author: Juste-Marie Fagla
-		  Date:   2025-12-10
-		  
-		  Filename: fitQuest_login
-	-->
-		<meta charset="UTF-8">
-		<title>Fitquest -Login Page</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-		<style>
-		:root{--red: #e53935; --dark-red:#c62828; --border:#dddddd; --text:#222;}
-
-		*{
-			color: #ffffff;
-			font-family: 'Open sans', sans-serif;
-			box-sizing: border-box; /* Good practice for layout */
-		}
-
-		h3{
+	    <!--
+	      Author: Juste-Marie Fagla
+	      Date:   2025-12-10
+	      
+	      Filename: fitQuest_login
+	    -->
+	    <meta charset="UTF-8">
+	    <title>Fitquest -Login Page</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	    <style>
+		    :root{--red: #e53935; --dark-red:#c62828; --border:#dddddd; --text:#222;}
+		
+		    *{
+		        color: #ffffff;
+		        font-family: 'Open sans', sans-serif;
+		        box-sizing: border-box;
+		    }
+		
+		    h3{
+		        color: var(--red);
+		    }
+		
+		    p{
+		        text-align: justify;
+		    }
+		
+		    body{
+		        background:url("img/wallpaper.jpg");
+		        text-align: center;
+		        
+		    }
+		
+		    input[type=range].slider{
+		        -webkit-appearance: none;
+		        width:80%;
+		        height: 20px;
+		        background: transparent;
+		    }
+		
+		    input[type=range].slider::-webkit-slider-runnable-track {
+		    width: 100%;
+		    height: 10px;
+		    background: #ccc;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    }
+		
+		    .card{
+		    border: 1px black solid;
+		    border-radius: 15px;
 			color: var(--red);
-		}
-
-		p{
-			text-align: justify;
-		}
-
-		body{
-			background:url("img/wallpaper.jpg");
-			text-align: center;
+			background: #ffffff;
+		    margin:1em auto 1em;
+		    position:relative;
+			top: 10px;
+		    padding:5px;
+		    width: 12rem;
+		    font-size: 2rem;
+		    box-shadow: 5px 5px 0px 3px var(--red); 
+		    }
+		
+		    .card:hover{
+		    background:var(--red);
+		    color: black;
+		    border:var(--red);
+		    box-shadow: 5px 5px 0px 3px black;
+		    }
+		
+		    input[type=range].slider::-webkit-slider-thumb {
+		        -webkit-appearance: none;
+		        height: 40px;
+		        width: 40px;
+		        background: url("img/runner.png");
+		        background-size: cover;
+		        cursor: pointer;
+		        margin-top: -15px;
+		    }
+		    input[type=range].slider::-moz-range-thumb {
+		        border: none;
+		        height: 40px;
+		        width: 40px;
+		        background: url("img/runner.png");
+		        cursor: pointer;
+		    }  
+		    input[type=range].slider::-ms-thumb {
+		        border: none;
+		        height: 40px;
+		        width: 40px;
+		        background: url("img/runner.png");
+		        cursor: pointer;
+		    }
+		
+		    .submit{
+		        background: var(--red);
+		        color: white;
+		        margin: 14px;
+		        width:80%;
+		        padding:10px;
+		        border: none;
+		        border-radius: 25px;
+		    }
+		
+		    .submit:hover{
+		        background: var(--dark-red);
+		        position: relative;
+		        box-shadow: 1px 1px 1px 0px black;
+		        top:2px;
+		    }
+		
+		    .table{
+		        display:grid;
+		        grid-template: auto 1fr;
+		        gap: 15px 25px;
+		        max-width: 100%; 
+		        margin:0 auto;
+		    }
+		    .table label{
+		        text-align: left;
+		        padding-top:5px;
+		        font-weight: 600;
+		    }
+		
+		    #register_form, #login_form {
+		        width: 45%; 
+		    }
 			
-		}
+			.main_panel{
+				background: rgba(255, 255, 255, 0.1);
+				backdrop-filter: blur(5px);
+				margin: 2em;
+				border-radius: 15px;
+				color: black;
+			}
+		
+		    .panel{
+		        background: rgba(255, 255, 255, 0.15);
+		        backdrop-filter:blur(10px);
+		        -webkit-backdrop-filter: blur(10px);
+		        position: relative;
+		        margin:80px auto 40px;
+		        padding: 7% 5%; 
+		        width: 900px;
+		        border: 2.5px solid var(--red); 
+		        border-radius: 15px;
+		        box-shadow: 0 4px 20px rgba(229, 57, 53, 0.5), 0 0 10px rgba(0, 0, 0, 0.5);
+		        transition: box-shadow 0.3s ease; 
+		        display:none;
+		
+		        display: flex;
+		        justify-content: space-around;
+		    }
+		
+		    .panel:hover {
+		        box-shadow: 0 8px 30px rgba(229, 57, 53, 0.8), 0 0 15px rgba(0, 0, 0, 0.7);
+		    }
+		
+		    .panel input[type="text"],
+		    .panel input[type="email"],
+		    .panel input[type="password"] {
+		        border: 1px solid rgba(255, 255, 255, 0.3);
+		        padding: 8px 10px;
+		        border-radius: 5px;
+		        background: rgba(0, 0, 0, 0.3); 
+		        color: white;
+		        transition: border 0.3s ease, box-shadow 0.3s ease;
+		    }
+		
+		    .panel input[type="text"]:focus,
+		    .panel input[type="email"]:focus,
+		    .panel input[type="password"]:focus {
+		        border: 1px solid var(--red);
+		        box-shadow: 0 0 5px var(--red);
+		        outline: none; 
+		    }
+		
+		    .break_line{
+		        width:100%;
+		        border: 1px grey solid;
+		    }
+		
+		    .guide1{
+		        margin:auto;
+		        text-align: center;
+		    }
+		    .about{
+		        width: 150px;
+		    }
+		    .main_panel{
+		        width: 95%;
+		        margin: auto; 
+		    }
+	
+	    </style>
 
-		input[type=range].slider{
-			-webkit-appearance: none;
-			width:80%;
-			height: 20px;
-			background: transparent;
-		}
-
-		input[type=range].slider::-webkit-slider-runnable-track {
-		width: 100%;
-		height: 10px;
-		background: #ccc;
-		border-radius: 5px;
-		cursor: pointer;
-		}
-
-		.card{
-		border: 1px black solid;
-		border-radius: 15px;
-		margin-bottom:5%;
-		margin-left: auto;
-		margin-right:auto;
-		position:relative;
-		padding:5px;
-		width: 10rem;
-		font-size: 2rem;
-		box-shadow: 5px 5px 0px 3px var(--red); 
-		}
-
-		.card:hover{
-		background:var(--red);
-		color: black;
-		border:var(--red);
-		box-shadow: 5px 5px 0px 3px black;
-		}
-
-		input[type=range].slider::-webkit-slider-thumb {
-			-webkit-appearance: none;
-			height: 40px;
-			width: 40px;
-			background: url("img/runner.png");
-			background-size: cover;
-			cursor: pointer;
-			margin-top: -15px;
-		}
-		input[type=range].slider::-moz-range-thumb {
-			border: none;
-			height: 40px;
-			width: 40px;
-			background: url("img/runner.png");
-			cursor: pointer;
-		}  
-		input[type=range].slider::-ms-thumb {
-			border: none;
-			height: 40px;
-			width: 40px;
-			background: url("img/runner.png");
-			cursor: pointer;
-		}
-
-		.submit{
-			background: var(--red);
-			color: white;
-			margin: 14px;
-			width:80%;
-			padding:10px;
-			border: none;
-			border-radius: 25px;
-		}
-
-		.submit:hover{
-			background: var(--dark-red);
-			position: relative;
-			box-shadow: 1px 1px 1px 0px black;
-			top:2px;
-		}
-
-		.table{
-			display:grid;
-			grid-template: auto 1fr;
-			gap: 15px 25px;
-			/* ADJUSTMENT: Reduced max-width for the side-by-side layout */
-			max-width: 100%; 
-			margin:0 auto;
-		}
-		.table label{
-			text-align: left;
-			padding-top:5px;
-			font-weight: 600;
-		}
-
-		/* NEW STYLES: Define form widths for side-by-side layout */
-		#register_form, #login_form {
-			width: 45%; 
-		}
-
-		.panel{
-			background: rgba(255, 255, 255, 0.15);
-			backdrop-filter:blur(10px);
-			-webkit-backdrop-filter: blur(10px);
-			position: relative;
-			/* REMOVED: old gap */
-			margin:80px auto 40px;
-			padding: 7% 5%; 
-			width: 900px; /* ADJUSTMENT: Increased width to accommodate two forms */
-			border: 2.5px solid var(--red); 
-			border-radius: 15px;
-			box-shadow: 0 4px 20px rgba(229, 57, 53, 0.5), 0 0 10px rgba(0, 0, 0, 0.5);
-			transition: box-shadow 0.3s ease; 
-			display:none;
-
-			/* NEW STYLES: Flexbox to align forms horizontally */
-			display: flex;
-			justify-content: space-around;
-		}
-
-		/* ENHANCEMENT: Subtle hover effect for the panel */
-		.panel:hover {
-			box-shadow: 0 8px 30px rgba(229, 57, 53, 0.8), 0 0 15px rgba(0, 0, 0, 0.7);
-		}
-
-		/* ENHANCEMENT: Style for form inputs */
-		.panel input[type="text"],
-		.panel input[type="email"],
-		.panel input[type="password"] {
-			border: 1px solid rgba(255, 255, 255, 0.3);
-			padding: 8px 10px;
-			border-radius: 5px;
-			background: rgba(0, 0, 0, 0.3); 
-			color: white;
-			transition: border 0.3s ease, box-shadow 0.3s ease;
-		}
-
-		/* ENHANCEMENT: Focus effect for input fields */
-		.panel input[type="text"]:focus,
-		.panel input[type="email"]:focus,
-		.panel input[type="password"]:focus {
-			border: 1px solid var(--red);
-			box-shadow: 0 0 5px var(--red);
-			outline: none; 
-		}
-
-
-		.break_line{
-			width:100%;
-			border: 1px grey solid;
-		}
-
-		.guide1{
-			margin:auto;
-			text-align: center;
-		}
-		.about{
-			width: 150px;
-		}
-		.main_panel{
-			width: 95%;
-			margin: auto; 
-		}
-
-		</style>
-
-	</head>
-
+</head>
 	<body>
 		<?php 
 
