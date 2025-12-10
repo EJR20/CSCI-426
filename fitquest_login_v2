@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<!--
+		  Author: Juste-Marie Fagla
+		  Date:   2025-12-10
+		  
+		  Filename: fitQuest_login
+	-->
 		<meta charset="UTF-8">
 		<title>Fitquest -Login Page</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
