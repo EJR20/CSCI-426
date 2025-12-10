@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitQuest - Logged Out</title>
+
+    <style>
+        :root{
+            --red: #e53935;
+            --dark-red: #c62828;
+            --text: black;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text);
+        }
+
+        body {
+            background: url("img/wallpaper.jpg");
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding-top: 120px;
+        }
+
+        .card {
+            border: 1px black solid;
+			background: white;
+            border-radius: 15px;
+            margin: 0 auto 30px;
+            padding: 10px;
+            width: 12rem;
+            font-size: 2rem;
+            box-shadow: 5px 5px 0px 3px var(--red);
+        }
+
+        .message_box {
+            width: 500px;
+            margin: auto;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2.5px solid var(--red);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(229, 57, 53, 0.5),
+                        0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            color: var(--red);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: var(--red);
+			color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--dark-red);
+            box-shadow: 1px 1px 6px black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">@FitQuest</div>
+
+    <div class="message_box">
+        <h2>You’ve Been Logged Out</h2>
+        <p>Thank you for staying consistent with your fitness journey!<br>
+        You can log back in anytime to continue your progress.</p>
+
+        <a href="fitquest_login_v2.html" class="btn">Return to Login</a>
+    </div>
+</body>
+</html>
