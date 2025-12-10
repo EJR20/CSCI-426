@@ -252,16 +252,20 @@
 		</section>
 
 		<script>
-		const slider = document.getElementById("slider");
-		const panel = document.getElementsByClassName("panel")[0];
-		
-		slider.addEventListener("input", function(){
-			if(slider.value == 100){
-				panel.style.display = "flex"; // Changed from "block" to "flex" to maintain the side-by-side layout
-			} else {
-                panel.style.display = "none";
-            }
-		});
+			const slider = document.getElementById("slider");
+			const main_panel = document.getElementById("main_container");
+			const panel = document.getElementsByClassName("panel")[0];
+			
+			slider.addEventListener("input", function(){
+				if(slider.value == 100){
+					main_panel.style.display = "none";
+					panel.style.display = "flex"; // Changed from "block" to "flex" to maintain the side-by-side layout
+				} else {
+					main_panel.style.display = "block";
+	                panel.style.display = "none";
+					
+	            }
+			});
 		</script>
 	</body>		
 </html>
