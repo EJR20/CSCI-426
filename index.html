@@ -251,20 +251,77 @@
 		</section>
 
 		<script>
-			const slider = document.getElementById("slider");
-			const main_panel = document.getElementById("main_container");
-			const panel = document.getElementsByClassName("panel")[0];
-			
-			slider.addEventListener("input", function(){
-				if(slider.value == 100){
-					main_panel.style.display = "none";
-					panel.style.display = "flex"; // Changed from "block" to "flex" to maintain the side-by-side layout
-				} else {
-					main_panel.style.display = "block";
-	                panel.style.display = "none";
-					
-	            }
-			});
-		</script>
+/* SLIDER HANDLING */
+const slider = document.getElementById("slider");
+const main_panel = document.getElementById("main_container");
+const panel = document.getElementsByClassName("panel")[0];
+
+slider.addEventListener("input", function(){
+    if (slider.value == 100){
+        main_panel.style.display = "none";
+        panel.style.display = "flex";
+    } else {
+        main_panel.style.display = "block";
+        panel.style.display = "none";
+    }
+});
+
+/* REGISTER */
+document.getElementById("register_form").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const lastName = this.lastName.value.trim();
+    const firstName = this.firstName.value.trim();
+    const userName = this.userName.value.trim();
+    const email = this.email.value.trim();
+    const password = this.password.value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || {};
+
+    if (users[userName]) {
+        alert("Username already exists!");
+        return;
+    }
+
+    users[userName] = {
+        lastName,
+        firstName,
+        userName,
+        email,
+        password
+    };
+
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("currentUser", userName);
+
+    alert("Registration successful!");
+    window.location.href = "fitquest_workout.html";
+});
+
+/* LOGIN */
+document.getElementById("login_form").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const userName = this.userName.value.trim();
+    const password = this.password.value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || {};
+
+    if (!users[userName]) {
+        alert("User not found.");
+        return;
+    }
+
+    if (users[userName].password !== password) {
+        alert("Incorrect password.");
+        return;
+    }
+
+    localStorage.setItem("currentUser", userName);
+
+    alert("Login successful!");
+    window.location.href = "progress-log.html"; 
+});
+</script>
 	</body>		
 </html>
