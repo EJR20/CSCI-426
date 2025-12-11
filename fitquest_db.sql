@@ -84,6 +84,13 @@ CREATE TABLE IF NOT EXISTS `workout_plans` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 COMMIT;
 
+-- Insert into the 'User' table
+
+INSERT INTO `authentification_users` 
+(`firstname`, `lastname`, `email`, `username`, `password`)
+VALUES
+('John', 'Doe', 'jdoe@gmail.com', 'JDoe', 'jdoeIsHappy');
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
