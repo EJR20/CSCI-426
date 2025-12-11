@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fitquest_db`
+-- Database: `Fitquest_db`
 --
   CREATE DATABASE IF NOT EXISTS 'Fitquest_DB';
   USE 'Fitquest_DB' ;
@@ -57,9 +57,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `full_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `age` int DEFAULT NULL,
-  `height_in` int DEFAULT NULL,
-  `weight_lb` decimal(5,2) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`)
@@ -86,10 +83,17 @@ COMMIT;
 
 -- Insert into the 'User' table
 
-INSERT INTO `authentification_users` 
+INSERT INTO `users` 
 (`firstname`, `lastname`, `email`, `username`, `password`)
 VALUES
 ('John', 'Doe', 'jdoe@gmail.com', 'JDoe', 'jdoeIsHappy');
+
+--Insert into the 'progress_' table
+INSERT INTO `progress_logs`
+(`user_id`, `log_date`, `mood`, `focus`, `weight_lb`, `strength_volume`, `cardio_minutes`, `rpe`, `notes`)
+VALUES
+(1, '2025-01-01', 'Happy', 'Focused', 180.50, 12000, 30, 7, 'Great workout today');
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
